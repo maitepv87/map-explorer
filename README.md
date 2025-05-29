@@ -1,54 +1,36 @@
-# React + TypeScript + Vite
+# React-TS-OSMAPI  
+A mapping application integrating OpenStreetMap API with React and TypeScript  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description  
+React-TS-OSMAPI is a technical demo showcasing how to interact with OpenStreetMap API using React, TypeScript, and Leaflet. This project enables searching for locations and visualizing them on an interactive map, making it an excellent portfolio piece for working with geospatial data.  
 
-Currently, two official plugins are available:
+## Features  
+- Search for places using OpenStreetMap’s Nominatim API  
+- Display a dynamic marker for selected locations  
+- Smooth map navigation (flyTo) upon selecting a place  
+- Responsive UI for better user experience  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used  
+- React – Frontend library for building UI components  
+- TypeScript – Static typing for better code reliability  
+- Leaflet & react-leaflet – Interactive mapping with OpenStreetMap integration  
+- OpenStreetMap API (Nominatim) – Location search and geocoding  
+- Vite – Fast build tool and development environment  
+- CSS/Tailwind (if applicable) – Styling for UI responsiveness  
 
-## Expanding the ESLint configuration
+## Getting Started  
+### Installation & Setup  
+To run the project locally, follow these steps:  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Clone the repository
+git clone https://github.com/maitepv87/react-ts-osmapi.git 
+cd react-ts-osmapi  
+npm install
+npm run dev
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Designed for modularity, scalability, and clarity.  
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Future Enhancements  
+- Save favorite locations for quick access  
+- Enhance map styles and UI interactions  
+- Integrate OpenRouteService API for route navigation  
