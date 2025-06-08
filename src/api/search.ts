@@ -12,6 +12,8 @@ interface SearchResponse {
   }[];
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const search = async (
   term: string
 ): Promise<{ places: Place[]; error?: string }> => {
@@ -21,7 +23,7 @@ export const search = async (
     }
 
     const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?q=${term}&format=geojson&addressdetails=1&layer=address&limit=5`
+      `${API_URL}/search?q=${term}&format=geojson&addressdetails=1&layer=address&limit=5`
     );
 
     if (!response.ok) {
