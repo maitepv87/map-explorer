@@ -12,12 +12,12 @@ interface SearchResponse {
   }[];
 }
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 export const search = async (
   term: string
 ): Promise<{ places: Place[]; error?: string }> => {
   try {
+    const API_URL = import.meta.env.VITE_API_URL;
+
     if (!term.trim()) {
       return { places: [], error: "Please enter a search term." };
     }
