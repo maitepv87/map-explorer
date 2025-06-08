@@ -12,21 +12,41 @@ interface SearchResponse {
   }[];
 }
 
-export const search = async (term: string) => {
-  const response = await fetch(
-    `https://nominatim.openstreetmap.org/search?q=${term}&format=geojson&addressdetails=1&layer=address&limit=5`
-  );
+export const search = async (
+  term: string
+): Promise<{ places: Place[]; error?: string }> => {
+  try {
+    if (!term.trim()) {
+      return { places: [], error: "Please enter a search term." };
+    }
 
-  const data: SearchResponse = await response.json();
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?q=${term}&format=geojson&addressdetails=1&layer=address&limit=5`
+    );
 
-  const places: Place[] = data.features.map((feature) => {
+    if (!response.ok) {
+      return {
+        places: [],
+        error: `API error: ${response.status} ${response.statusText}`,
+      };
+    }
+
+    const data: SearchResponse = await response.json();
+
+    if (!data.features || data.features.length === 0) {
+      return { places: [], error: "No locations found." };
+    }
+
     return {
-      id: feature.properties.place_id,
-      name: feature.properties.display_name,
-      longitude: feature.geometry.coordinates[0],
-      latitude: feature.geometry.coordinates[1],
+      places: data.features.map((feature) => ({
+        id: feature.properties.place_id,
+        name: feature.properties.display_name,
+        longitude: feature.geometry.coordinates[0],
+        latitude: feature.geometry.coordinates[1],
+      })),
     };
-  });
-
-  return places;
+  } catch (error) {
+    console.error("Error fetching locations:", error);
+    return { places: [], error: "Network error. Please try again later." };
+  }
 };
