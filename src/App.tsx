@@ -6,14 +6,14 @@ function App() {
   const [place, setPlace] = useState<Place | null>(null);
 
   return (
-    <div className="h-screen w-screen grid grid-cols-12">
-      <div className="col-span-3 p-2">
+    <div className="h-screen w-screen grid grid-cols-12 bg-gray-50">
+      <aside className="col-span-3 p-4 bg-white shadow-lg border-r border-gray-200">
         <LocationSearch onPlaceClick={(p) => setPlace(p)} />
-      </div>
+      </aside>
 
-      <div className="col-span-9">
+      <main className="col-span-9">
         <Map place={place} />
-      </div>
+      </main>
     </div>
   );
 }

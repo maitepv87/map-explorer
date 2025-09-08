@@ -1,0 +1,9 @@
+export const ACTION_TYPES = {
+  SET_SEARCH_TERM: "SET_SEARCH_TERM",
+  SET_PLACES: "SET_PLACES",
+  SET_LOADING: "SET_LOADING",
+  SET_ERROR: "SET_ERROR",
+  SET_HAS_SEARCHED: "SET_HAS_SEARCHED",
+} as const;
+
+export type ActionType = (typeof ACTION_TYPES)[keyof typeof ACTION_TYPES];

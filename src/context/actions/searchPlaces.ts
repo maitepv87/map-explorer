@@ -1,29 +1,28 @@
 import type { Place } from "../../api/Place";
-import type { SearchAction } from "../SearchContext";
+import type { SearchAction } from "../useSearchReducer";
+import { ACTION_TYPES } from "../actionTypes";
 
 interface SearchResponse {
   features: {
-    geometry: {
-      coordinates: number[];
-    };
-    properties: {
-      place_id: number;
-      display_name: string;
-    };
+    geometry: { coordinates: number[] };
+    properties: { place_id: number; display_name: string };
   }[];
 }
 
 export const searchPlaces = async (
   dispatch: React.Dispatch<SearchAction>,
   term: string
-): Promise<void> => {
-  dispatch({ type: "SET_LOADING", payload: true });
-  dispatch({ type: "SET_ERROR", payload: null });
+) => {
+  dispatch({ type: ACTION_TYPES.SET_LOADING, payload: true });
+  dispatch({ type: ACTION_TYPES.SET_ERROR, payload: null });
 
   if (!term.trim()) {
-    dispatch({ type: "SET_ERROR", payload: "Please enter a search term." });
-    dispatch({ type: "SET_LOADING", payload: false });
-    dispatch({ type: "SET_PLACES", payload: [] });
+    dispatch({
+      type: ACTION_TYPES.SET_ERROR,
+      payload: "Please enter a search term.",
+    });
+    dispatch({ type: ACTION_TYPES.SET_LOADING, payload: false });
+    dispatch({ type: ACTION_TYPES.SET_PLACES, payload: [] });
     return;
   }
 
@@ -34,34 +33,32 @@ export const searchPlaces = async (
     );
 
     if (!response.ok) {
-      dispatch({
-        type: "SET_ERROR",
-        payload: `API error: ${response.statusText}`,
-      });
-      dispatch({ type: "SET_LOADING", payload: false });
-      return;
+      throw new Error(`API error: ${response.statusText}`);
     }
 
     const data: SearchResponse = await response.json();
 
-    if (!data.features || data.features.length === 0) {
-      dispatch({ type: "SET_ERROR", payload: "No locations found." });
-      dispatch({ type: "SET_PLACES", payload: [] });
+    if (!data.features.length) {
+      dispatch({
+        type: ACTION_TYPES.SET_ERROR,
+        payload: "No locations found.",
+      });
+      dispatch({ type: ACTION_TYPES.SET_PLACES, payload: [] });
     } else {
-      const places: Place[] = data.features.map((feature) => ({
-        id: feature.properties.place_id,
-        name: feature.properties.display_name,
-        longitude: feature.geometry.coordinates[0],
-        latitude: feature.geometry.coordinates[1],
+      const places: Place[] = data.features.map((f) => ({
+        id: f.properties.place_id,
+        name: f.properties.display_name,
+        longitude: f.geometry.coordinates[0],
+        latitude: f.geometry.coordinates[1],
       }));
-      dispatch({ type: "SET_PLACES", payload: places });
+      dispatch({ type: ACTION_TYPES.SET_PLACES, payload: places });
     }
   } catch (error) {
     dispatch({
-      type: "SET_ERROR",
+      type: ACTION_TYPES.SET_ERROR,
       payload: "Network error. Please try again later.",
     });
+  } finally {
+    dispatch({ type: ACTION_TYPES.SET_LOADING, payload: false });
   }
-
-  dispatch({ type: "SET_LOADING", payload: false });
 };
