@@ -1,7 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import type { Place } from "../api/Place";
 import { useEffect } from "react";
-import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMap, Popup } from "react-leaflet";
 
 interface MapProps {
   place: Place | null;
@@ -26,9 +26,14 @@ export const Map = ({ place }: MapProps) => {
       zoom={12}
       scrollWheelZoom
       className="h-full"
+      aria-label="Map of selected location"
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      {place && <Marker position={[place.latitude, place.longitude]} />}
+      {place && (
+        <Marker position={[place.latitude, place.longitude]}>
+          <Popup>{place.name}</Popup>
+        </Marker>
+      )}
       <MapComponent place={place} />
     </MapContainer>
   );
