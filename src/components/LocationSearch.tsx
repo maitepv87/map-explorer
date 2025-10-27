@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import type { Place } from "../api/Place";
-import { useSearchContext } from "../context/SearchContext";
+import { useSearchContext } from "../context/useSearchContext";
 import { searchPlaces } from "../context/actions/searchPlaces";
 import { ACTION_TYPES } from "../context/actionTypes";
 import { ErrorBanner, LoadingSpinner, EmptyState } from "./";
