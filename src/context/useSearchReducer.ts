@@ -1,7 +1,6 @@
 import { ACTION_TYPES } from "./actionTypes";
 import type { Place } from "../api/Place";
 
-// Defines the shape of our search state
 export interface SearchState {
   searchTerm: string;
   places: Place[];
@@ -10,7 +9,6 @@ export interface SearchState {
   errorMessage: string | null;
 }
 
-// Initial state for the search reducer
 export const initialState: SearchState = {
   searchTerm: "",
   places: [],
@@ -19,7 +17,6 @@ export const initialState: SearchState = {
   errorMessage: null,
 };
 
-// All possible actions the reducer can handle
 export type SearchAction =
   | { type: typeof ACTION_TYPES.SET_SEARCH_TERM; payload: string }
   | { type: typeof ACTION_TYPES.SET_PLACES; payload: Place[] }
@@ -27,7 +24,6 @@ export type SearchAction =
   | { type: typeof ACTION_TYPES.SET_ERROR; payload: string | null }
   | { type: typeof ACTION_TYPES.SET_HAS_SEARCHED; payload: boolean };
 
-// Reducer function to update search state based on dispatched actions
 export const searchReducer = (
   state: SearchState,
   action: SearchAction

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import type { Place } from "../api/Place";
-import { useSearchContext } from "../context/useSearchContext";
+import { useSearchContext } from "../context/SearchContext";
 import { searchPlaces } from "../context/actions/searchPlaces";
 import { ACTION_TYPES } from "../context/actionTypes";
-import { ErrorBanner, LoadingSpinner, EmptyState } from "./";
+import { ErrorMessage, LoadingIndicator, EmptyState } from "./";
 
 interface LocationSearchProps {
   onPlaceClick: (place: Place) => void;
@@ -30,12 +30,12 @@ export const LocationSearch = ({ onPlaceClick }: LocationSearchProps) => {
   return (
     <div className="flex flex-col h-full bg-white rounded-lg shadow-md p-4">
       {/* Form */}
-      <form onSubmit={handleSubmit} className="mb-4" role="search">
+      <form onSubmit={handleSubmit} className="mb-4">
         <label
           className="text-sm font-semibold text-gray-700 block mb-2"
           htmlFor="searchTerm"
         >
-          Search for a location
+          Search
         </label>
         <div className="relative w-full">
           <input
@@ -49,7 +49,7 @@ export const LocationSearch = ({ onPlaceClick }: LocationSearchProps) => {
               })
             }
             placeholder="Search for a city or landmark..."
-            aria-label="Search for a location"
+            aria-label="Search locations"
           />
           {state.searchTerm && (
             <button
@@ -82,9 +82,9 @@ export const LocationSearch = ({ onPlaceClick }: LocationSearchProps) => {
           </h1>
         )}
 
-        {state.isLoading && <LoadingSpinner text="Searching..." />}
+        {state.isLoading && <LoadingIndicator text="Searching..." />}
 
-        {state.errorMessage && <ErrorBanner message={state.errorMessage} />}
+        {state.errorMessage && <ErrorMessage message={state.errorMessage} />}
 
         {!state.isLoading &&
           state.hasSearched &&

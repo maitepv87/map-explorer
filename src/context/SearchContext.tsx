@@ -12,12 +12,10 @@ import {
   type SearchAction,
 } from "./useSearchReducer";
 
-// Create the context
 const SearchContext = createContext<
   { state: SearchState; dispatch: Dispatch<SearchAction> } | undefined
 >(undefined);
 
-// Provider that wraps the app
 export const SearchProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(searchReducer, initialState);
   return (
@@ -27,7 +25,6 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook to consume the context
 export const useSearchContext = () => {
   const context = useContext(SearchContext);
   if (!context) {
