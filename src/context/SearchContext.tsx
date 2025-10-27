@@ -12,10 +12,12 @@ import {
   type SearchAction,
 } from "./useSearchReducer";
 
+// Create a context to share search state and dispatch across components
 const SearchContext = createContext<
   { state: SearchState; dispatch: Dispatch<SearchAction> } | undefined
 >(undefined);
 
+// Provider component that wraps the app and supplies search state via context
 export const SearchProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(searchReducer, initialState);
   return (
@@ -25,6 +27,7 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// Custom hook to access the search context safely
 export const useSearchContext = () => {
   const context = useContext(SearchContext);
   if (!context) {

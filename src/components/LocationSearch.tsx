@@ -3,7 +3,7 @@ import type { Place } from "../api/Place";
 import { useSearchContext } from "../context/SearchContext";
 import { searchPlaces } from "../context/actions/searchPlaces";
 import { ACTION_TYPES } from "../context/actionTypes";
-import { ErrorMessage, LoadingIndicator, EmptyState } from "./";
+import { ErrorMessage, LoadingSpinner, EmptyState } from "./";
 
 interface LocationSearchProps {
   onPlaceClick: (place: Place) => void;
@@ -82,7 +82,7 @@ export const LocationSearch = ({ onPlaceClick }: LocationSearchProps) => {
           </h1>
         )}
 
-        {state.isLoading && <LoadingIndicator text="Searching..." />}
+        {state.isLoading && <LoadingSpinner text="Searching..." />}
 
         {state.errorMessage && <ErrorMessage message={state.errorMessage} />}
 
